@@ -39,7 +39,7 @@ takes two value arguments holding 8-bit integers and results in their addition.
 Here is a possible SSA representation of the addition of two `uint8` values:
 
 	// var c uint8 = a + b
-	v4 = Add8 <uint8> v2 v3
+	v4 = Add8 &lt;uint8&gt; v2 v3
 
 A value's type will usually be a Go type. For example, the value in the example
 above has a `uint8` type, and a constant boolean value will have a `bool` type.
@@ -51,12 +51,12 @@ enclosed in `[]` or `{}`, and could be the constant op argument, argument type,
 etc.
 for example:
 
-	v13 (?) = Const64 <int> [1]
+	v13 (?) = Const64 &lt;int&gt; [1]
 
 Here the aux field is the constant op argument, the op is creating a `Const64`
 value of 1. One more example:
 
-	v17 (361) = Store <mem> {int} v16 v14 v8
+	v17 (361) = Store &lt;mem&gt; {int} v16 v14 v8
 
 Here the aux field is the type of the value being `Store`ed, which is int.
 
@@ -71,8 +71,8 @@ right order. For example:
 
 	// *a = 3
 	// *b = *a
-	v10 = Store <mem> {int} v6 v8 v1
-	v14 = Store <mem> {int} v7 v8 v10
+	v10 = Store &lt;mem&gt; {int} v6 v8 v1
+	v14 = Store &lt;mem&gt; {int} v7 v8 v10
 
 Here, `Store` stores its second argument (of type `int`) into the first argument
 (of type `*int`). The last argument is the memory state; since the second store
@@ -110,20 +110,20 @@ Here is a sample if-else control flow represented with basic blocks:
 	// 	return 3
 	// }
 	b1:
-	  v1 = InitMem <mem>
-	  v2 = SP <uintptr>
-	  v5 = Addr <*int> {~r1} v2
-	  v6 = Arg <bool> {b}
-	  v8 = Const64 <int> [2]
-	  v12 = Const64 <int> [3]
-	  If v6 -> b2 b3
-	b2: <- b1
-	  v10 = VarDef <mem> {~r1} v1
-	  v11 = Store <mem> {int} v5 v8 v10
+	  v1 = InitMem &lt;mem&gt;
+	  v2 = SP &lt;uintptr&gt;
+	  v5 = Addr &lt;*int&gt; {~r1} v2
+	  v6 = Arg &lt;bool&gt; {b}
+	  v8 = Const64 &lt;int&gt; [2]
+	  v12 = Const64 &lt;int&gt; [3]
+	  If v6 -&gt; b2 b3
+	b2: &lt;- b1
+	  v10 = VarDef &lt;mem&gt; {~r1} v1
+	  v11 = Store &lt;mem&gt; {int} v5 v8 v10
 	  Ret v11
-	b3: <- b1
-	  v14 = VarDef <mem> {~r1} v1
-	  v15 = Store <mem> {int} v5 v12 v14
+	b3: &lt;- b1
+	  v14 = VarDef &lt;mem&gt; {~r1} v1
+	  v15 = Store &lt;mem&gt; {int} v5 v12 v14
 	  Ret v15
 
 <!---
@@ -154,7 +154,7 @@ exit block that returns an uninteresting memory state:
 
 	foo func()
 	  b1:
-	    v1 = InitMem <mem>
+	    v1 = InitMem &lt;mem&gt;
 	    Ret v1
 
 See [func.go](func.go) for more information.
